@@ -18,6 +18,7 @@ def get_view_parent(view_parent, view_parent_id, view_child):
         return make_response(jsonify({"error": "Not found"}), 404)
     return jsonify([v.to_dict() for v in getattr(parent, view_child)])
 
+
 def delete_view(view, view_id):
     """DELETE view"""
     obj_v = storage.get(view, view_id)
