@@ -35,13 +35,13 @@ def delete_place_amenity(place_id, amenity_id):
     if not amenity:
         abort(404)
     place_amenities = place.amenities
-    place_amenity = list(lambda a: a.id == amenity_id, place_amenities)
+    place_amenity = list(filter(lambda a: a.id == amenity_id, place_amenities))
     if not place_amenity:
         abort(404)
     if db_storage:
         place.amenities.remove(place_amenity[0])
     else:
-        place.amenity_ids.remove(place_amenity[0])
+        place.amenity_ids.remove(place_amenity[0].id)
     place.save()
     return jsonify({})
 
@@ -60,7 +60,7 @@ def post_place_amenity(place_id, amenity_id):
     if not amenity:
         abort(404)
     place_amenities = place.amenities
-    place_amenity = list(lambda a: a.id == amenity_id, place_amenities)
+    place_amenity = list(filter(lambda a: a.id == amenity_id, place_amenities))
     if place_amenity:
         return jsonify(amenity.to_dict())
     if db_storage:
