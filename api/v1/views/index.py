@@ -14,6 +14,9 @@ def status():
 @app_views.route('/stats', methods=["GET"])
 def stats():
     """Return /stats api route"""
-    return jsonify({"amenities": models.storage.count("Amenity"), "cities": models.storage.count("City"),
-                    "places": models.storage.count("Place"), "reviews": models.storage.count("Review"),
-                    "states": models.storage.count("State"), "users": models.storage.count("User")})
+    return jsonify({"amenities": models.storage.count("Amenity"),
+                    "cities": models.storage.count("City"),
+                    "places": models.storage.count("Place"),
+                    "reviews": models.storage.count("Review"),
+                    "states": models.storage.count("State"),
+                    "users": models.storage.count("User")})
