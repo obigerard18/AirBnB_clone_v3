@@ -6,10 +6,11 @@ from models.amenity import Amenity
 from os import getenv
 from models import storage
 
-db_storage = (getenv("HBNB_TYPE_STORAGE") in ["db", "file"])
+db_storage = (getenv("HBNB_TYPE_STORAGE") == db)
 
 
-@app_views.route('/places/<place_id>/amenities')
+@app_views.route('/places/<place_id>/amenities', 
+                 methods=["GET"])
 def get_place_amenities(place_id):
     """
     Get a list of all amenites associated with place
@@ -43,7 +44,7 @@ def delete_place_amenity(place_id, amenity_id):
     else:
         place.amenity_ids.remove(place_amenity[0].id)
     place.save()
-    return jsonify({})
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
@@ -68,4 +69,4 @@ def post_place_amenity(place_id, amenity_id):
     else:
         place.amenity_ids.append(amenity_id)
     place.save()
-    return jsonify(amenity.to_dict()), 201
+    return make_response(jsonify(amenity.to_dict()), 201)
