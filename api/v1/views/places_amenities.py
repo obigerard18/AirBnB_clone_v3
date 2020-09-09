@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """places_amenities views"""
-from flask import abort, jsonify, request
+from flask import abort, jsonify, request, make_response
 from api.v1.views import app_views
 from models.amenity import Amenity
 from os import getenv
