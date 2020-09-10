@@ -4,10 +4,11 @@ from api.v1.views import app_views
 from api.v1.views import *
 from models import storage
 from models.review import Review
+from models.place import Place
 from flask import jsonify, make_response, request
 
-view = "Review"
-parent_view = "Place"
+view = Review
+parent_view = Place
 
 
 @app_views.route("/places/<place_id>/reviews",

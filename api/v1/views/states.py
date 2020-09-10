@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 from flask import jsonify, make_response, request
 
-view = "State"
+view = State
 
 
 @app_views.route("/states", strict_slashes=False,

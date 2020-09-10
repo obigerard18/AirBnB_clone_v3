@@ -1,0 +1,5 @@
+danielaloperahernandez - Daniela Lopera
+
+The use of the Get function is consistent since it complies with the complexity of
+the time and returns None by default, in the count method lines are optimized in
+the return and the unit tests are according to what each method does.
