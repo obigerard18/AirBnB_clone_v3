@@ -41,9 +41,9 @@ def post_view(view, view_parent, view_parent_id, required):
     if not data:
         return make_response(jsonify({'error': "Not a JSON"}), 400)
     for req in required:
-        if req not in data:
+        if req not in data.keys():
             message = "Missing " + req
-            return make_response(jsonify({'error': message}), 400)
+            abort(400, message)
     if "user_id" in required:
         if not storage.get(User, data.get("user_id")):
             return make_response(jsonify({"error": "Not found"}), 404)
