@@ -5,6 +5,8 @@ from api.v1.views import *
 from models import storage
 from models.place import Place
 from models.city import City
+from models.amenity import Amenity
+from models.state import State
 from flask import jsonify, make_response, request
 
 view = Place
@@ -44,3 +46,37 @@ def put_place(place_id):
     """PUT view"""
     ignore = ["id", "user_id", "city_id", "created_at", "updated_at"]
     return put_view(view, place_id, ignore)
+
+
+@app_views.route("/places_search", methods=["POST"])
+def place_search():
+    """
+    retrieves all Place objects 
+    depending of the JSON in the body of the request
+    """
+    data = request.get_json()
+    if not data:
+        return make_response(jsonify({'error': "Not a JSON"}), 400)
+
+    places = []
+    if not len(data) or all([len(v) == 0 for k, v in data.items()]):
+        places = storage.all(view).values()
+
+
+    if len(data.get("cities", [])):
+        cities = [storage.get(parent_view, id) for id in data["cities"]]
+        [[places.append(place) for place in city.places]
+         for city in cities if city]
+
+    if len(data.get("states", [])):
+        states = [storage.get(State, id) for id in data["states"]]
+        [[[places.append(place) for place in city.places]
+         for city in state.cities] for state in states if state]
+
+    places = list(places)
+    if len(data.get("amenities", [])):
+        amenities = [storage.get(Amenity, id) for id in data["amenities"]]
+        places = [place for place in places
+                  if all([a in place.amenities for a in amenities])]
+
+    return jsonify([place.to_dict() for place in places])
