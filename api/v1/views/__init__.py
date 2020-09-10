@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module for Blueprint"""
 from flask import Blueprint, make_response, jsonify
+from models.user import User
 
 
 def get_view(view, view_id):
@@ -44,7 +45,7 @@ def post_view(view, view_parent, view_parent_id, required):
             message = "Missing " + req
             return make_response(jsonify({"error": message}), 400)
     if "user_id" in required:
-        if not storage.get("User", data.get("user_id")):
+        if not storage.get(User, data.get("user_id")):
             return make_response(jsonify({"error": "Not found"}), 404)
     if view_parent:
         data[view_parent.lower() + '_id'] = view_parent_id
