@@ -8,7 +8,7 @@ def get_view(view, view_id):
     """GET view"""
     obj_v = storage.get(view, view_id)
     if not obj_v:
-        abort(400)
+        return make_response(jsonify({"error": "Not found"}), 404)
     return jsonify(obj_v.to_dict())
 
 
@@ -16,7 +16,7 @@ def get_view_parent(view_parent, view_parent_id, view_child):
     """GET view parent"""
     parent = storage.get(view_parent, view_parent_id)
     if not parent:
-        abort(400)
+        return make_response(jsonify({"error": "Not found"}), 404)
     return jsonify([v.to_dict() for v in getattr(parent, view_child)])
 
 
@@ -24,7 +24,7 @@ def delete_view(view, view_id):
     """DELETE view"""
     obj_v = storage.get(view, view_id)
     if not obj_v:
-        abort(400)
+        return make_response(jsonify({"error": "Not found"}), 404)
     storage.delete(obj_v)
     storage.save()
     return make_response(jsonify({}), 200)
@@ -36,17 +36,17 @@ def post_view(view, view_parent, view_parent_id, required):
     if view_parent:
         parent = storage.get(view_parent, view_parent_id)
         if not parent:
-            abort(400)
+            return make_response(jsonify({"error": "Not found"}), 404)
     data = request.get_json(force=True, silent=True)
     if not data:
         abort(400, {'Not a JSON'})
     for req in required:
         if req not in data:
             message = "Missing " + req
-            abort(400, message)
+            abort(400, {message})
     if "user_id" in required:
         if not storage.get(User, data.get("user_id")):
-            abort(400)
+            return make_response(jsonify({"error": "Not found"}), 404)
     if view_parent:
         data[view_parent.lower() + '_id'] = view_parent_id
     obj_v = classes[view](**data)
@@ -58,7 +58,7 @@ def put_view(view, view_id, ignore):
     """PUT view"""
     obj_v = storage.get(view, view_id)
     if not obj_v:
-        abort(400)
+        return make_response(jsonify({"error": "Not found"}), 404)
     data = request.get_json(force=True, silent=True)
     if not data:
         abort(400, {'Not a JSON'})
