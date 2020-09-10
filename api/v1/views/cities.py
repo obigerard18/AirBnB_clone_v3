@@ -42,5 +42,5 @@ def post_city(state_id):
 @app_views.route("/cities/<city_id>", methods=["PUT"])
 def put_city(city_id):
     """PUT view"""
-    ignore = ["id", "created_at", "updated_at"]
+    ignore = ["id", "state_id", "created_at", "updated_at"]
     return put_view(view, city_id, ignore)
