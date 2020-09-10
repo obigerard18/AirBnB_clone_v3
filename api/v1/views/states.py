@@ -29,7 +29,7 @@ def delete_state(state_id):
 @app_views.route("/states", strict_slashes=False, methods=["POST"])
 def post_state():
     """POST"""
-    required = {"name"}
+    required = ["name"]
     return post_view(view, None, None, required)
 
 

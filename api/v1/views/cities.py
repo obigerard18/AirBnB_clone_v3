@@ -35,7 +35,7 @@ def delete_city(city_id):
                  methods=["POST"])
 def post_city(state_id):
     """POST view"""
-    required = {"name"}
+    required = ["name"]
     return post_view(view, parent_view, state_id, required)
 
 

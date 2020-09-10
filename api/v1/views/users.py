@@ -29,7 +29,7 @@ def delete_user(user_id):
 @app_views.route("/users", strict_slashes=False, methods=["POST"])
 def post_user():
     """POST view"""
-    required = {"email", "password"}
+    required = ["email", "password"]
     return post_view(view, None, None, required)
 
 

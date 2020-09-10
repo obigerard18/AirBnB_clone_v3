@@ -35,7 +35,7 @@ def delete_review(review_id):
                  methods=["POST"])
 def post_review(place_id):
     """POST view"""
-    required = {"user_id", "text"}
+    required = ["user_id", "text"]
     return post_view(view, parent_view, place_id, required)
 
 

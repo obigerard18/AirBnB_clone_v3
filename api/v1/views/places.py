@@ -35,7 +35,7 @@ def delete_place(place_id):
                  methods=["POST"])
 def post_place(city_id):
     """POST view"""
-    required = {"name", "user_id"}
+    required = ["name", "user_id"]
     return post_view(view, parent_view, city_id, required)
 
 
