@@ -37,7 +37,7 @@ def post_view(view, view_parent, view_parent_id, required):
         parent = storage.get(view_parent, view_parent_id)
         if not parent:
             return make_response(jsonify({"error": "Not found"}), 404)
-    data = request.get_json(force=True, silent=True)
+    data = request.get_json()
     if not data:
         return make_response(jsonify({'error': "Not a JSON"}), 400)
     for req in required:
@@ -59,7 +59,7 @@ def put_view(view, view_id, ignore):
     obj_v = storage.get(view, view_id)
     if not obj_v:
         return make_response(jsonify({"error": "Not found"}), 404)
-    data = request.get_json(force=True, silent=True)
+    data = request.get_json()
     if not data:
         return make_response(jsonify({'error': "Not a JSON"}), 400)
     for k, v in data.items():
