@@ -39,7 +39,7 @@ def post_view(view, view_parent, view_parent_id, required):
             return make_response(jsonify({"error": "Not found"}), 404)
     data = request.get_json(force=True, silent=True)
     if not data:
-        abort(400, 'Not a JSON')
+        abort(400, {'Not a JSON'})
     for req in required:
         if req not in data:
             message = "Missing " + req
@@ -61,7 +61,7 @@ def put_view(view, view_id, ignore):
         return make_response(jsonify({"error": "Not found"}), 404)
     data = request.get_json(force=True, silent=True)
     if not data:
-        abort(400, 'Not a JSON')
+        abort(400, {'Not a JSON'})
     for k, v in data.items():
         if k not in ignore:
             setattr(obj_v, k, v)
