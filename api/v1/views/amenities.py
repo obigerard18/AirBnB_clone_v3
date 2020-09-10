@@ -29,7 +29,7 @@ def delete_amenity(amenity_id):
 @app_views.route("/amenities", strict_slashes=False, methods=["POST"])
 def post_amenity():
     """POST"""
-    required = {"name"}
+    required = ["name"]
     return post_view(view, None, None, required)
 
 
