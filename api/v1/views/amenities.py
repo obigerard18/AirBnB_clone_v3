@@ -6,7 +6,7 @@ from models import storage
 from models.amenity import Amenity
 from flask import jsonify, make_response, request
 
-view = "Amenity"
+view = Amenity
 
 
 @app_views.route("/amenities", strict_slashes=False,
