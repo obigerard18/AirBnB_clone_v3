@@ -43,13 +43,13 @@ def post_view(view, view_parent, view_parent_id, required):
     for req in required:
         if req not in data.keys():
             message = "Missing " + req
-            abort(400, message)
+            return make_response(jsonify({'error': message}), 400)
     if "user_id" in required:
         if not storage.get(User, data.get("user_id")):
             abort(404)
     if view_parent:
         data[view_parent.lower() + '_id'] = view_parent_id
-    obj_v = classes[view](**data)
+    obj_v = view(**data)
     obj_v.save()
     return make_response(jsonify(obj_v.to_dict()), 201)
 
