@@ -32,7 +32,6 @@ def delete_view(view, view_id):
 
 def post_view(view, view_parent, view_parent_id, required):
     """POST /model api route"""
-    from models.engine.db_storage import classes
     if view_parent:
         parent = storage.get(view_parent, view_parent_id)
         if not parent:
@@ -48,7 +47,7 @@ def post_view(view, view_parent, view_parent_id, required):
         if not storage.get(User, data.get("user_id")):
             abort(404)
     if view_parent:
-        data[view_parent.lower() + '_id'] = view_parent_id
+        data[view_parent.__name__.lower() + '_id'] = view_parent_id
     obj_v = view(**data)
     obj_v.save()
     return make_response(jsonify(obj_v.to_dict()), 201)
