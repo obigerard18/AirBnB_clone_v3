@@ -51,17 +51,17 @@ def put_place(place_id):
 @app_views.route("/places_search", methods=["POST"])
 def place_search():
     """
-    retrieves all Place objects 
+    retrieves all Place objects
     depending of the JSON in the body of the request
     """
     data = request.get_json()
     if not data:
         return make_response(jsonify({'error': "Not a JSON"}), 400)
 
+    sc = {"states", "cities"}
     places = []
-    if not len(data) or all([len(v) == 0 for k, v in data.items()]):
+    if not len(data) or all([len(v) == 0 for k, v in data.items() if k in sc]):
         places = storage.all(view).values()
-
 
     if len(data.get("cities", [])):
         cities = [storage.get(parent_view, id) for id in data["cities"]]
@@ -73,7 +73,7 @@ def place_search():
         [[[places.append(place) for place in city.places]
          for city in state.cities] for state in states if state]
 
-    places = list(places)
+    places = list(set(places))
     if len(data.get("amenities", [])):
         amenities = [storage.get(Amenity, id) for id in data["amenities"]]
         places = [place for place in places
