@@ -56,8 +56,7 @@ def place_search():
     """
     data = request.get_json()
     if data is None:
-        return make_response(jsonify({'error': "Not a JSON"}), 400)
-
+        abort(400, 'Not a JSON')
     sc = {"states", "cities"}
     places = []
     if not len(data) or all([len(v) == 0 for k, v in data.items() if k in sc]):
