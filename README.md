@@ -161,7 +161,7 @@ Second part of Airbnb: Joann Vuong
 
 Third part part of Airbnb: 
 * Daniela Lopera - [Github](https://github.com/danielaloperahernandez)
-* Mónica Ortiz - [Github](https://github.com/alexaorrico)
+* Mónica Ortiz - [Github](https://github.com/monicajoa)
 
 ## License
 
